@@ -1,6 +1,8 @@
-from player import round
+from player import *
 from modslist import buffs_list, debuffs_list
 from enemies import enemy
+
+round = 0
 
 def temp_modifiers():
     buffs = temp_buffs()
@@ -17,7 +19,7 @@ def temp_buffs(buffs):
         "Defense": 0,
         "Speed": 0
     }
-    for k,v in buffs:1
+    for k,v in buffs:
         if k in buffs_list():
             if k == "Attack Boost":
                 temp_b_mod["Attack"] += v
