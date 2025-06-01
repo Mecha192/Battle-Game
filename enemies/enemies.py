@@ -1,4 +1,5 @@
-from player import *
+import pygame
+import random
 from fairy import *
 from goblin import *
 from orc import *
@@ -20,11 +21,18 @@ class enemy:
 
     def is_hit(self, damage):
         self.health -= damage
-        if self.health <= 0:
-            return "Kill!"
         return self.health
 
+    def player_inputs(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_e] == True:
+            return target.__str__()
+        
     def __str__(self):
         print(f"{self.name}:")
         print(f"Base: (Health: {self.health}, Attack Power: {self.attack}, Defense: {self.defense}, Speed: {self.speed})")
         return f"With Modifiers: (Health: {self.health}, Attack Power: {self.attack}, Defense: {self.defense}, Speed: {self.speed})"
+
+enemy1 = random.choice([None, fairy, goblin, orc, troll])
+enemy2 = random.choice([None, fairy, goblin, orc, troll])
+enemy3 = random.choice([None, fairy, goblin, orc, troll])

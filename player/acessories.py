@@ -1,24 +1,25 @@
+from modifiers import *
 def accessories():
     return {
             "necklace": {
                 "name": "Necklace",
-                "Buff: Speed Boost": 2
+                "Speed Boost": 2
             },
             "bracelet": {
                 "name": "Bracelet",
-                "Buff: Attack Boost": 1
+                "Attack Boost": 1
             },
             "ring_attack": {
                 "name": "Attack Ring",
-                "Buff: Attack Boost": 1
+                "Attack Boost": 1
             },
             "ring_defense": {
                 "name": "Defense Ring",
-                "Buff: Defense Boost": 1
+                "Defense Boost": 1
             },
             "belt": {
                 "name": "Belt",
-                "Buff: Defense Boost": 1
+                "Defense Boost": 1
             },
     }
 equipped_accessories = []
@@ -28,6 +29,12 @@ def equip_accessory(accessory_name):
     accessory = accessories().get(accessory_name)
     if accessory not in equipped_accessories:
         equipped_accessories.append(accessory)
+        if "Attack Boost" in accessory:
+            add_buff(accessory["Attack Boost"])
+        if "Defense Boost" in accessory:
+            add_buff(accessory["Defense Boost"])
+        if "Speed Boost" in accessory:
+            add_buff(accessory["Speed Boost"])
         print(f"{accessory['name']} has been equipped.")
     else:
         print(f"{accessory_name} is not a valid acessory or is already equipped.")

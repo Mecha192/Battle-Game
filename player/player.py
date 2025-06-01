@@ -1,7 +1,9 @@
 import pygame
 from equipment import player_equipment
+import rooms
 from battle import temp_modifiers, round
 from enemies import *
+from target import *
 from modifiers import player_modifiers
 
 class player:
@@ -11,12 +13,34 @@ class player:
         self.attack = attack
         self.defense = defense
         self.speed = speed
+        self.max_health = 50
 
+    def rest(self, max_health):
+        if self.health > max_health:
+            return
+        else:
+            self.health = max_health
+        return self.health
+    
+    def add_max_health(self, amount):
+        if self.health == self.max_health:
+            self.health += amount
+            self.max_health += amount
+        else:
+            self.max_health += amount
+        return self.max_health
+    
     def attack(self, target):
+        self.attack += player_equipment["weapons"].get_damage()
+        self.attack += player_modifiers["Attack"]
+        self.attack -= player_modifiers["Attack Reduction"]
         damage = self.attack - target.defense
         if damage < 0:
             damage = 0
         target.is_hit(0, damage)
+        if target.health <= 0:
+            return f"You killed {target.name}!"
+        return f"You attack {target.name}. You dealt {damage} damage."
 
     def is_hit(self, damage):
         self.health -= damage
@@ -26,20 +50,18 @@ class player:
 
     def player_inputs():
         keys = pygame.key.get_pressed()
+        target = player.get_target()
+        if keys[pygame.K_c] == True:
+            return self.__str__()
+        if keys[pygame.K_e] == True:
+            return target.__str__()
         if keys[pygame.K_ENTER] == True:
             round += 1
 
-    def player_equipment_mods(equipment=player_equipment):
-        equipment_mods = {
-            "weapons": equipment["weapons"].get_modifiers(),
-            "armor": equipment["armor"].get_modifiers(),
-            "accessories": equipment["accessories"].get_modifiers()
-        }
-        return equipment_mods
-
-    def player_stats():
-        player_equipment_stats = player_equipment_mods()
-
+    def get_target():
+        target_enemy = None
+        return target_enemy
+    
     def __str__(self):
         print(f"{self.name}:")
         print(f"Base: (Health: {self.health}, Attack Power: {self.attack}, Defense: {self.defense}, Speed: {self.speed})")

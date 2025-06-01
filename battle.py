@@ -1,6 +1,7 @@
 from player import *
+from enemies import *
 from modslist import buffs_list, debuffs_list
-from enemies import enemy
+
 
 round = 0
 
