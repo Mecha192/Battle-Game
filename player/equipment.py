@@ -11,7 +11,7 @@ def get_modifiers():
     modifiers = {
         "weapons": player_equipment["weapons"].get_damage(),
         "armor": player_equipment["armor"].get_defense(),
-        "accessories": player_equipment["acessories"].get_mods()
+        "accessories": player_equipment["acessories"].get_items()
     }
     return modifiers
 
@@ -26,3 +26,6 @@ def get_defense():
     for armor in player_equipment["armor"]:
         total_defense += armor.get("defense", 0)
     return total_defense
+
+def get_items():
+    return equipped_accessories
